@@ -1,6 +1,10 @@
 const redux = require("redux");
 const immer = require("immer");
+const reduxLogger = require("redux-logger");
+const applyMiddleware = redux.applyMiddleware;
+
 const produce = immer.produce;
+const logger = reduxLogger.createLogger
 
 const createStore = redux.createStore;
 
@@ -31,12 +35,12 @@ const addressReducer = (state = addressState, action) => {
   }
 };
 
-const store = createStore(addressReducer);
+const store = createStore(addressReducer, applyMiddleware(logger()));
 
 console.log("Initial State", store.getState());
 
 const unSubscribe = store.subscribe(() =>
-  console.log("Updated State", store.getState())
+{}
 );
 
 store.dispatch(updateAddress("Azhakar 1"));
